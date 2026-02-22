@@ -4,10 +4,9 @@ use rand::Rng;
 
 fn main() {
     let answer: u32 = rand::thread_rng().gen_range(1..=100);
-    println!("answer is : {answer}");
 
     loop{
-    println!("Guess a Number Any Number: ");
+    println!("Guess a Number between 1 and 100: ");
 
     let mut guess = String::new();
 
@@ -15,7 +14,13 @@ fn main() {
         .read_line(&mut guess)
         .expect("Failed to read line");
 
-    let guess: u32 = guess.trim().parse().expect("Failed to Parse Guess");
+    let guess: u32 = match guess.trim().parse() {
+        Ok(num) => num,
+        Err(_) => {
+            println!("Failed to Parse Guess");
+            continue;
+        },
+    };
 
     println!("you guessed {guess}");
 
